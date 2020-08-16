@@ -1,41 +1,48 @@
-# react-native-pay-u-money-lib
+# react-native-payUMoneyLib
 
 ## Getting started
 
-`$ npm install react-native-pay-u-money-lib --save`
+`$ npm install react-native-payUMoneyLib --save`
 
-### Mostly automatic installation
+### Installation
 
-`$ react-native link react-native-pay-u-money-lib`
+####Only For RN <= 0.59
 
-### Manual installation
+`$ react-native link react-native-payUMoneyLib`
 
 
 #### iOS
 
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-pay-u-money-lib` and add `RNPayUMoneyLib.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNPayUMoneyLib.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
+#####Add following line in Podfile
 
-#### Android
+`pod 'PayUmoney_PnP'`
+
+#####Then, run the following command:
+
+`$ pod install`
+
+####RN >= 0.60
+
+`No need to do anything`
+
+#### Android Manual Installation
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
   - Add `import com.reactlibrary.RNPayUMoneyLibPackage;` to the imports at the top of the file
   - Add `new RNPayUMoneyLibPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
-  	include ':react-native-pay-u-money-lib'
-  	project(':react-native-pay-u-money-lib').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-pay-u-money-lib/android')
+  	include ':react-native-payUMoneyLib'
+  	project(':react-native-payUMoneyLib').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-payUMoneyLib/android')
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':react-native-pay-u-money-lib')
+      compile project(':react-native-payUMoneyLib')
   	```
 
 ## Usage
 ```javascript
-import RNPayUMoneyLib from 'react-native-pay-u-money-lib';
+import RNPayUMoneyLib from 'react-native-payUMoneyLib';
 
 // TODO: What to do with the module?
 RNPayUMoneyLib;
