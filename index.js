@@ -24,7 +24,12 @@ const PayUMoneyLib = (payUData) => {
             if (typeof data !== 'object') {
                 data = JSON.parse(data);
             }
-            resolve(Object.assign(Object.assign({}, data), { success: true }));
+
+            if (data.response.result.status === "success"){
+                resolve(Object.assign(Object.assign({}, data), { success: true }));
+            }else{
+                resolve(Object.assign(Object.assign({}, data), { success: false, error_message: data.response.result.error_Message}));
+            }
             removeSubscriptions();
         });
         RNEvent.addListener('PAYU_PAYMENT_FAILED', (data) => {
