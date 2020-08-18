@@ -1,7 +1,12 @@
 
 package com.sandeep.payulib;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -11,6 +16,7 @@ import com.google.gson.Gson;
 import com.payumoney.core.PayUmoneySdkInitializer.PaymentParam;
 import com.payumoney.core.entity.TransactionResponse;
 import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
+
 import static android.app.Activity.RESULT_OK;
 
 public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements ActivityEventListener {
@@ -19,15 +25,23 @@ public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements 
   public RNPayUMoneyLibModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
+    reactContext.addActivityEventListener(this);
   }
 
+  @Override
+  public void initialize() {
+    super.initialize();
+    reactContext.addActivityEventListener(this);
+  }
+
+  @NonNull
   @Override
   public String getName() {
     return "RNPayUMoneyLib";
   }
 
   @ReactMethod
-  public void payU(String data){
+  public void payUMoneyLib(String data) {
     RNPayUMoneyLibModel payUData = new Gson().fromJson(data, RNPayUMoneyLibModel.class);
     PaymentParam.Builder builder = new PaymentParam.Builder();
     builder.setAmount(payUData.amount)                          // Payment amount
@@ -56,7 +70,8 @@ public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements 
       final PaymentParam paymentParam = builder.build();
       paymentParam.setMerchantHash(payUData.hash);
 
-      this.dispatchThread((Runnable)(new Runnable() {
+      Log.e("Activity", getCurrentActivity().toString());
+      this.dispatchThread((Runnable) (new Runnable() {
         public final void run() {
           PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, getCurrentActivity(), R.style.AppTheme_default, true);
         }
@@ -66,33 +81,34 @@ public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements 
     }
   }
 
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
+  public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+     if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
       TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE);
-      String PAYU_PAYMENT_FAILED = "PAYU_PAYMENT_FAILED";
-      if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
-        String payUResponse = transactionResponse.getPayuResponse();
-        if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
-          String PAYU_PAYMENT_SUCCESS = "PAYU_PAYMENT_SUCCESS";
-          sendEvent(PAYU_PAYMENT_SUCCESS, "{response: $payUResponse}");
+        if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
+          String payUResponse = transactionResponse.getPayuResponse();
+          if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
+            sendEvent("PAYU_PAYMENT_SUCCESS", "{\"response\":$payUResponse}");
+          } else {
+            sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
+          }
         } else {
-          sendEvent(PAYU_PAYMENT_FAILED, "{success: false}");
+          sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
         }
-      } else {
-        sendEvent(PAYU_PAYMENT_FAILED, "{success: false}");
+    }
+  }
+
+    public void onNewIntent (Intent intent){
+
+    }
+
+    private void sendEvent (String eventName, String params){
+      reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+    }
+
+    protected void dispatchThread (Runnable runnable){
+      if (runnable == null) {
+        return;
       }
+      reactContext.runOnUiQueueThread(runnable);
     }
   }
-
-  private void sendEvent(String eventName, String params) {
-    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
-  }
-
-  protected void dispatchThread(Runnable runnable) {
-    if (runnable == null) {
-      return;
-    }
-    reactContext.runOnUiQueueThread(runnable);
-  }
-}
