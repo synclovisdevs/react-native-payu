@@ -1,3 +1,4 @@
+//  Copyright ©2020 Sandeep Mishra. All rights reserved.
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import {sha512} from "js-sha512";

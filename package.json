@@ -1,7 +1,8 @@
 {
-  "name": "react-native-pay-u-money-lib",
+  "name": "react-native-payUMoneyLib",
   "version": "1.0.0",
-  "description": "",
+  "description": "This library is for react-native support for payUMoney for both android and iOS",
+  "summary": "This library is for react-native support for payUMoney for both android and iOS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +10,11 @@
   "keywords": [
     "react-native"
   ],
-  "author": "",
-  "license": "",
+  "author": {
+    "name": "Sandeep Mishra",
+    "email": "sanmish16@gmail.com"
+  },
+  "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2",
     "react-native-windows": "0.41.0-rc.1"

@@ -1,3 +1,5 @@
+//  RNPayUMoneyLib.m
+//  Copyright ©2020 Sandeep Mishra. All rights reserved.
 
 #import "RNPayUMoneyLib.h"
 
