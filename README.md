@@ -6,35 +6,35 @@
 
 ### Installation
 
-####Only For RN <= 0.59
+#### Only For RN <= 0.59
 
 `$ react-native link react-native-payUMoneyLib`
 
 
 #### iOS
 
-#####Add following line in Podfile
+##### Add following line in Podfile
 
 `pod 'PayUmoney_PnP'`
 
-#####Then, run the following command:
+##### Then, run the following command:
 
 `$ pod install`
 
-####RN >= 0.60
+#### RN >= 0.60
 
 `No need to do anything`
 
 #### iOS Manual Installation
 
-#####Add following line in Podfile
+##### Add following line in Podfile
 
 
 ```
 pod 'react-native-payUMoneyLib', :path => '../node_modules/react-native-payUMoneyLib'`
 pod 'PayUmoney_PnP'
 ```
-#####Then, run the following command:
+##### Then, run the following command:
 
 `$ pod install`
 
