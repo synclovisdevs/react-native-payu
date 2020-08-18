@@ -82,33 +82,35 @@ public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements 
   }
 
   public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-     if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
+    if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
       TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE);
-        if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
-          String payUResponse = transactionResponse.getPayuResponse();
-          if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
-            sendEvent("PAYU_PAYMENT_SUCCESS", "{\"response\":$payUResponse}");
-          } else {
-            sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
-          }
+      if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
+        String payUResponse = transactionResponse.getPayuResponse();
+        if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
+          sendEvent("PAYU_PAYMENT_SUCCESS", "{\"response\":" + payUResponse + "}");
         } else {
           sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
         }
-    }
-  }
-
-    public void onNewIntent (Intent intent){
-
-    }
-
-    private void sendEvent (String eventName, String params){
-      reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
-    }
-
-    protected void dispatchThread (Runnable runnable){
-      if (runnable == null) {
-        return;
+      } else {
+        sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
       }
-      reactContext.runOnUiQueueThread(runnable);
+    }else{
+      sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
     }
   }
+
+  public void onNewIntent (Intent intent){
+
+  }
+
+  private void sendEvent (String eventName, String params){
+    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+  }
+
+  protected void dispatchThread (Runnable runnable){
+    if (runnable == null) {
+      return;
+    }
+    reactContext.runOnUiQueueThread(runnable);
+  }
+}
