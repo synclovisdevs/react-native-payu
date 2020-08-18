@@ -1,5 +1,8 @@
 # react-native-payUMoneyLib
 
+<img src='https://img.shields.io/badge/license-MIT-blue.svg' />  <a href="https://www.npmjs.com/package/react-native-payUMoneyLib"><img alt="npm dowloads" src="https://img.shields.io/npm/dm/react-native-payUMoneyLib.svg"/></a> <a href="https://www.npmjs.com/package/react-native-payUMoneyLib"><img alt="npm version" src="https://badge.fury.io/js/react-native-payUMoneyLib.svg"/></a> [![Build Status](https://travis-ci.org/sanmish16/react-native-payUMoneyLib.svg?branch=master)](https://travis-ci.org/sanmish16/react-native-payUMoneyLib) [![Greenkeeper badge](https://badges.greenkeeper.io/sanmish16/react-native-payUMoneyLib.svg)](https://greenkeeper.io/)
+
+-----
 ## Getting started
 
 `$ npm install react-native-payUMoneyLib --save`
