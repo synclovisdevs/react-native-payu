@@ -86,7 +86,7 @@ public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements 
       TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE);
       if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
         String payUResponse = transactionResponse.getPayuResponse();
-        if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
+        if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL) || transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.FAILED)) {
           sendEvent("PAYU_PAYMENT_SUCCESS", "{\"response\":" + payUResponse + "}");
         } else {
           sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
