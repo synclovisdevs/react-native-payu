@@ -25,6 +25,19 @@
 
 `No need to do anything`
 
+#### iOS Manual Installation
+
+#####Add following line in Podfile
+
+
+```
+pod 'react-native-payUMoneyLib', :path => '../node_modules/react-native-payUMoneyLib'`
+pod 'PayUmoney_PnP'
+```
+#####Then, run the following command:
+
+`$ pod install`
+
 #### Android Manual Installation
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
