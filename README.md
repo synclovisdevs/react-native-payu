@@ -1,17 +1,17 @@
-# react-native-payU
+# react-native-payu
 
-<img src='https://img.shields.io/badge/license-MIT-blue.svg' />  <a href="https://www.npmjs.com/package/react-native-payU"><img alt="npm dowloads" src="https://img.shields.io/npm/dm/react-native-payU.svg"/></a> <a href="https://www.npmjs.com/package/react-native-payU"><img alt="npm version" src="https://badge.fury.io/js/react-native-payU.svg"/></a> [![Build Status](https://travis-ci.org/synclovisdevs/react-native-payU.svg?branch=master)](https://travis-ci.org/synclovisdevs/react-native-payU) [![Greenkeeper badge](https://badges.greenkeeper.io/synclovisdevs/react-native-payU.svg)](https://greenkeeper.io/)
+<img src='https://img.shields.io/badge/license-MIT-blue.svg' />  <a href="https://www.npmjs.com/package/react-native-payu"><img alt="npm dowloads" src="https://img.shields.io/npm/dm/react-native-payu.svg"/></a> <a href="https://www.npmjs.com/package/react-native-payu"><img alt="npm version" src="https://badge.fury.io/js/react-native-payu.svg"/></a> [![Build Status](https://travis-ci.org/synclovisdevs/react-native-payu.svg?branch=master)](https://travis-ci.org/synclovisdevs/react-native-payu) [![Greenkeeper badge](https://badges.greenkeeper.io/synclovisdevs/react-native-payu.svg)](https://greenkeeper.io/)
 
 -----
 ## Getting started
 
-`$ npm install react-native-payU --save`
+`$ npm install react-native-payu --save`
 
 ### Installation
 
 #### Only For RN <= 0.59
 
-`$ react-native link react-native-payU`
+`$ react-native link react-native-payu`
 
 
 #### iOS
@@ -34,7 +34,7 @@
 
 
 ```
-pod 'react-native-payU', :path => '../node_modules/react-native-payU'`
+pod 'react-native-payu', :path => '../node_modules/react-native-payu'`
 pod 'PayUmoney_PnP'
 ```
 ##### Then, run the following command:
@@ -48,15 +48,15 @@ pod 'PayUmoney_PnP'
   - Add `new RNPayUPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
-  	include ':react-native-payU'
-  	project(':react-native-payU').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-payU/android')
+  	include ':react-native-payu'
+  	project(':react-native-payu').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-payu/android')
   	```
 3. Insert the following lines inside the dependencies block in 
 
     `android/app/build.gradle`:
     
   	```
-    implementation project(':react-native-payU')
+    implementation project(':react-native-payu')
   	```
 
 ## Usage
@@ -73,7 +73,7 @@ pod 'PayUmoney_PnP'
 1. Import PayUMoneyLib module to your component:
 
      ```
-     import PayUMoneyLib from 'react-native-payU';
+     import PayUMoneyLib from 'react-native-payu';
      ```
  
  2. Call `PayU()` method with the payment `options`. Method
@@ -114,7 +114,7 @@ pod 'PayUmoney_PnP'
  > Don't use in production just for testing purpose
  
  ```js
- import {HashSequence} from 'react-native-payumoney';
+ import {HashSequence} from 'react-native-payu';
  
  HashSequence({
      key: "Your Merchent Key",

@@ -1,9 +1,9 @@
 {
-  "name": "react-native-payU",
+  "name": "react-native-payu",
   "version": "1.0.0",
   "description": "This library is for react-native support for payUMoney for both android and iOS",
   "summary": "This library is for react-native support for payUMoney for both android and iOS",
-  "homepage": "https://github.com/sanmish16/react-native-payU#readme",
+  "homepage": "https://github.com/sanmish16/react-native-payu#readme",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
