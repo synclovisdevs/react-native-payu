@@ -62,7 +62,7 @@ pod 'PayUmoney_PnP'
 ## Usage
 1. Get PayU data:
     ````
-   Create your Merchant account in PayU website.
+   Create your Merchant account in PayU website. **https://www.payu.in**
    
    Under Profile you will get your Merchant ID
    
