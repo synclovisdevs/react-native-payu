@@ -145,7 +145,7 @@ pod 'PayUmoney_PnP'
 Below is the test card details for transaction in the testing mode. 
  ```js
    Card No - 5123 4567 8901 2346
-   Expiry - 11/22 // any future data
+   Expiry - 11/22 // any future date
    CVV - 123
  ```
 
