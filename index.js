@@ -20,23 +20,20 @@ const HashSequence = payUData => {
 const PayU = (payUData) => {
     payUData = getDafault(payUData);
     return new Promise((resolve, reject) => {
-        RNEvent.addListener('PAYMENT_SUCCESS', (data) => {
-            if (typeof data !== 'object') {
-                data = JSON.parse(data);
+        RNEvent.addListener('PAYMENT_SUCCESS', (responseData) => {
+            if (typeof responseData !== 'object') {
+                responseData = JSON.parse(responseData);
             }
 
-            if (data.payUResponse.result.status === "success"){
-                resolve(Object.assign(Object.assign({}, data), { status: true }));
+            if (responseData.payUResponse.result.status === "success"){
+                resolve(Object.assign(Object.assign({}, responseData), { status: true }));
             }else{
-                resolve(Object.assign(Object.assign({}, data), { status: false, error_message: data.payUResponse.result.error_Message}));
+                resolve(Object.assign(Object.assign({}, responseData), { status: false, error_message: responseData.payUResponse.result.error_Message}));
             }
             removeSubscriptions();
         });
-        RNEvent.addListener('PAYMENT_FAILED', (data) => {
-            if (typeof data !== 'object') {
-                data = JSON.parse(data);
-            }
-            reject(data);
+        RNEvent.addListener('PAYMENT_FAILED', (responseData) => {
+            reject({status: false});
             removeSubscriptions();
         });
 

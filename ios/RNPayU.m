@@ -50,15 +50,15 @@ RCT_EXPORT_METHOD(start :(NSString *)payUData) {
             if (error) {
                 [self sendEventWithName:@"PAYMENT_FAILED" body:@{@"status": @false}];
             } else {
-                [self payUResponse: paymentResponse];
+                [self payUResponse:paymentResponse];
             }
         }];
     });
 }
 
--(void) payUResponse (NSDictionary *): paymentResponse{
+-(void) payUResponse: (NSDictionary*)paymentResponse{
     if ([paymentResponse objectForKey:@"result"] && [[paymentResponse objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
-        NSString payUMessage = [[paymentResponse objectForKey:@"result"] valueForKey:@"error_message"];
+        NSString *payUMessage = [[paymentResponse objectForKey:@"result"] valueForKey:@"error_message"];
         if ([payUMessage isEqual:[NSNull null]] || [payUMessage length] == 0 || [payUMessage isEqualToString:@"No Error"]) {
             [self sendEventWithName:@"PAYMENT_SUCCESS" body:@{@"payUResponse": paymentResponse}];
         }
