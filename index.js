@@ -3,36 +3,36 @@
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import {sha512} from "js-sha512";
 
-const { RNPayUMoneyLib } = NativeModules;
-const RNEvent = new NativeEventEmitter(RNPayUMoneyLib);
+const { RNPayU } = NativeModules;
+const RNEvent = new NativeEventEmitter(RNPayU);
 
 const removeSubscriptions = () => {
-    RNEvent.removeAllListeners('PAYU_PAYMENT_SUCCESS');
-    RNEvent.removeAllListeners('PAYU_PAYMENT_FAILED');
+    RNEvent.removeAllListeners('PAYMENT_SUCCESS');
+    RNEvent.removeAllListeners('PAYMENT_FAILED');
 };
 
-const HashGenerator = payUData => {
+const HashSequence = payUData => {
     payUData = getDafault(payUData);
     const hashString = `${payUData.key}|${payUData.txnId}|${payUData.amount}|${payUData.productName}|${payUData.firstName}|${payUData.email}|${payUData.udf1}|${payUData.udf2}|${payUData.udf3}|${payUData.udf4}|${payUData.udf5}|${payUData.udf6}|${payUData.udf7}|${payUData.udf8}|${payUData.udf9}|${payUData.udf10}|${payUData.salt}`;
     return sha512(hashString);
 }
 
-const PayUMoneyLib = (payUData) => {
+const PayU = (payUData) => {
     payUData = getDafault(payUData);
     return new Promise((resolve, reject) => {
-        RNEvent.addListener('PAYU_PAYMENT_SUCCESS', (data) => {
+        RNEvent.addListener('PAYMENT_SUCCESS', (data) => {
             if (typeof data !== 'object') {
                 data = JSON.parse(data);
             }
 
-            if (data.response.result.status === "success"){
-                resolve(Object.assign(Object.assign({}, data), { success: true }));
+            if (data.payUResponse.result.status === "success"){
+                resolve(Object.assign(Object.assign({}, data), { status: true }));
             }else{
-                resolve(Object.assign(Object.assign({}, data), { success: false, error_message: data.response.result.error_Message}));
+                resolve(Object.assign(Object.assign({}, data), { status: false, error_message: data.payUResponse.result.error_Message}));
             }
             removeSubscriptions();
         });
-        RNEvent.addListener('PAYU_PAYMENT_FAILED', (data) => {
+        RNEvent.addListener('PAYMENT_FAILED', (data) => {
             if (typeof data !== 'object') {
                 data = JSON.parse(data);
             }
@@ -40,8 +40,7 @@ const PayUMoneyLib = (payUData) => {
             removeSubscriptions();
         });
 
-        console.log("sdxgfcgnsedfxg35645yr", payUData)
-        RNPayUMoneyLib.payUMoneyLib(JSON.stringify(payUData));
+        RNPayU.start(JSON.stringify(payUData));
     });
 };
 
@@ -60,5 +59,5 @@ const getDafault = payUData => {
     return payUData;
 }
 
-export default PayUMoneyLib;
-export {HashGenerator}
+export default PayU;
+export {HashSequence}

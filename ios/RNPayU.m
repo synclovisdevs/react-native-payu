@@ -1,19 +1,19 @@
-//  RNPayUMoneyLib.m
+//  RNPayU.m
 //  Copyright ©2020 Sandeep Mishra. All rights reserved.
 
-#import "RNPayUMoneyLib.h"
+#import "RNPayU.h"
 #import <PlugNPlay/PlugNPlay.h>
 #import <React/RCTUtils.h>
 
-@implementation RNPayUMoneyLib
+@implementation RNPayU
 
 RCT_EXPORT_MODULE()
 
 - (NSArray<NSString *> *)supportedEvents{
-    return @[@"PAYU_PAYMENT_SUCCESS", @"PAYU_PAYMENT_FAILED"];
+    return @[@"PAYMENT_SUCCESS", @"PAYMENT_FAILED"];
 }
 
-RCT_EXPORT_METHOD(payUMoneyLib :(NSString *)payUData) {
+RCT_EXPORT_METHOD(start :(NSString *)payUData) {
 
     NSData *jsonPayUData = [payUData dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error;
@@ -24,7 +24,8 @@ RCT_EXPORT_METHOD(payUMoneyLib :(NSString *)payUData) {
     txnParam.phone = payUMoneyData[@"phone"];
     txnParam.email = payUMoneyData[@"email"];
     txnParam.amount = payUMoneyData[@"amount"];
-    txnParam.environment = [payUMoneyData[@"isSandbox"] intValue] == 1?PUMEnvironmentTest:PUMEnvironmentProduction;    txnParam.firstname = payUMoneyData[@"firstName"];
+    txnParam.environment = [payUMoneyData[@"isSandbox"] intValue] == 1?PUMEnvironmentTest:PUMEnvironmentProduction;
+    txnParam.firstname = payUMoneyData[@"firstName"];
     txnParam.key = payUMoneyData[@"key"];
     txnParam.merchantid = payUMoneyData[@"merchantId"];
     txnParam.txnID = payUMoneyData[@"txnId"];
@@ -46,23 +47,24 @@ RCT_EXPORT_METHOD(payUMoneyLib :(NSString *)payUData) {
     dispatch_sync(dispatch_get_main_queue(), ^{
         [PlugNPlay setDisableCompletionScreen:YES];
         [PlugNPlay presentPaymentViewControllerWithTxnParams:txnParam onViewController:RCTPresentedViewController() withCompletionBlock:^(NSDictionary *paymentResponse, NSError *error, id extraParam) {
-
             if (error) {
-                [self sendEventWithName:@"PAYU_PAYMENT_FAILED" body:@{@"success": @false}];
+                [self sendEventWithName:@"PAYMENT_FAILED" body:@{@"status": @false}];
             } else {
-                NSString *message;
-                if ([paymentResponse objectForKey:@"result"] && [[paymentResponse objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
-                    message = [[paymentResponse objectForKey:@"result"] valueForKey:@"error_message"];
-                    if ([message isEqual:[NSNull null]] || [message length] == 0 || [message isEqualToString:@"No Error"]) {
-                        [self sendEventWithName:@"PAYU_PAYMENT_SUCCESS" body:@{@"response": paymentResponse}];
-                    }
-                } else {
-                    [self sendEventWithName:@"PAYU_PAYMENT_FAILED" body:@{@"success": @false}];
-                }
+                [self payUResponse: paymentResponse];
             }
         }];
     });
+}
 
+-(void) payUResponse (NSDictionary *): paymentResponse{
+    if ([paymentResponse objectForKey:@"result"] && [[paymentResponse objectForKey:@"result"] isKindOfClass:[NSDictionary class]]) {
+        NSString payUMessage = [[paymentResponse objectForKey:@"result"] valueForKey:@"error_message"];
+        if ([payUMessage isEqual:[NSNull null]] || [payUMessage length] == 0 || [payUMessage isEqualToString:@"No Error"]) {
+            [self sendEventWithName:@"PAYMENT_SUCCESS" body:@{@"payUResponse": paymentResponse}];
+        }
+    } else {
+        [self sendEventWithName:@"PAYMENT_FAILED" body:@{@"status": @false}];
+    }
 }
 
 @end

@@ -41,7 +41,7 @@ public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements 
   }
 
   @ReactMethod
-  public void payUMoneyLib(String data) {
+  public void start(String data) {
     RNPayUMoneyLibModel payUData = new Gson().fromJson(data, RNPayUMoneyLibModel.class);
     PaymentParam.Builder builder = new PaymentParam.Builder();
     builder.setAmount(payUData.amount)                          // Payment amount
@@ -84,19 +84,23 @@ public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements 
   public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
     if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
       TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE);
-      if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
-        String payUResponse = transactionResponse.getPayuResponse();
-        if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL) || transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.FAILED)) {
-          sendEvent("PAYU_PAYMENT_SUCCESS", "{\"response\":" + payUResponse + "}");
-        } else {
-          sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
-        }
-      } else {
-        sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
-      }
+      paymentResponse(transactionResponse);
     }else{
-      sendEvent("PAYU_PAYMENT_FAILED", "{\"success\":false}");
+      sendEvent("PAYMENT_FAILED", "{\"status\":false}");
     }
+  }
+
+  public void paymentResponse(TransactionResponse transactionResponse){
+  if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
+          String payUResponse = transactionResponse.getPayuResponse();
+          if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL) || transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.FAILED)) {
+            sendEvent("PAYMENT_SUCCESS", "{\"payUResponse\":" + payUResponse + "}");
+          } else {
+            sendEvent("PAYMENT_FAILED", "{\"status\":false}");
+          }
+        } else {
+          sendEvent("PAYMENT_FAILED", "{\"status\":false}");
+        }
   }
 
   public void onNewIntent (Intent intent){
