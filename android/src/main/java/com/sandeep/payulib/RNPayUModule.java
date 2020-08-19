@@ -19,10 +19,10 @@ import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
 
 import static android.app.Activity.RESULT_OK;
 
-public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements ActivityEventListener {
+public class RNPayUModule extends ReactContextBaseJavaModule implements ActivityEventListener {
   private final ReactApplicationContext reactContext;
 
-  public RNPayUMoneyLibModule(ReactApplicationContext reactContext) {
+  public RNPayUModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
     reactContext.addActivityEventListener(this);
@@ -37,12 +37,12 @@ public class RNPayUMoneyLibModule extends ReactContextBaseJavaModule implements 
   @NonNull
   @Override
   public String getName() {
-    return "RNPayUMoneyLib";
+    return "RNPayU";
   }
 
   @ReactMethod
   public void start(String data) {
-    RNPayUMoneyLibModel payUData = new Gson().fromJson(data, RNPayUMoneyLibModel.class);
+    RNPayUModel payUData = new Gson().fromJson(data, RNPayUModel.class);
     PaymentParam.Builder builder = new PaymentParam.Builder();
     builder.setAmount(payUData.amount)                          // Payment amount
             .setTxnId(payUData.txnId)                           // Transaction ID

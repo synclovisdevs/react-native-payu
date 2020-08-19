@@ -1,6 +1,6 @@
 package com.sandeep.payulib;
 
-public class RNPayUMoneyLibModel {
+public class RNPayUModel {
     String key;
     String merchantId;
     String amount;

@@ -3,7 +3,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:RNPayUMoneyLib.xcodeproj">
+      location = "group:RNPayU.xcodeproj">
    </FileRef>
 </Workspace>
   

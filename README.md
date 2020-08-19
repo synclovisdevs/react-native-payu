@@ -123,7 +123,7 @@ pod 'PayUmoney_PnP'
      txnId: "642346786768",
      productName: "product_name",
      firstName: "Your First Name",
-     salt: "Salt",
+     salt: "Salt"
  })
  
  // output: 43dfxcvdxd345tre534g545gb54e4g646h7nfgr35e060c3bfc0e489290e7c902750d5db3fc8be2f180daf4d534d7b9bef46fa0158a4c8a057b61

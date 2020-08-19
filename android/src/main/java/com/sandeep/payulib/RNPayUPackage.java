@@ -10,10 +10,11 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
-public class RNPayUMoneyLibPackage implements ReactPackage {
+
+public class RNPayUPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-      return Arrays.<NativeModule>asList(new RNPayUMoneyLibModule(reactContext));
+      return Arrays.<NativeModule>asList(new RNPayUModule(reactContext));
     }
 
     // Deprecated from RN 0.47
