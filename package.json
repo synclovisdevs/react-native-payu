@@ -1,10 +1,13 @@
 {
   "name": "react-native-payu",
   "version": "1.0.0",
-  "description": "This library is for react-native support for payUMoney for both android and iOS",
-  "summary": "This library is for react-native support for payUMoney for both android and iOS",
-  "homepage": "https://github.com/sanmish16/react-native-payu#readme",
+  "description": "This library is for react-native support for payU for both android and iOS",
+  "summary": "This library is for react-native support for payU for both android and iOS",
+  "homepage": "https://github.com/synclovisdevs/react-native-payu#readme",
   "main": "index.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,10 +21,7 @@
     "payumoney",
     "react-native-payu"
   ],
-  "author": {
-    "name": "Sandeep Mishra",
-    "email": "sanmish16@gmail.com"
-  },
+  "author": "Sandeep Mishra <sanmish16@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2",
@@ -29,5 +29,9 @@
   },
   "dependencies": {
     "js-sha512": "^0.8.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/synclovisdevs/react-native-payu/issues"
+  },
+  "devDependencies": {}
 }
