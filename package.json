@@ -8,8 +8,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/synclovisdevs/react-native-payu.git"
+  },
   "keywords": [
-    "react-native"
+    "react-native",
+    "payu",
+    "payumoney",
+    "react-native-payu"
   ],
   "author": {
     "name": "Sandeep Mishra",
