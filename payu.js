@@ -4,11 +4,6 @@ import {sha512} from "js-sha512";
 const { RNPayU } = NativeModules;
 const RNEvent = new NativeEventEmitter(RNPayU);
 
-const removeSubscriptions = () => {
-    RNEvent.removeAllListeners('PAYMENT_SUCCESS');
-    RNEvent.removeAllListeners('PAYMENT_FAILED');
-};
-
 export default class PayU{
     static startPayment(payUData){
         payUData = getDefault(payUData);
@@ -23,11 +18,11 @@ export default class PayU{
                 }else{
                     resolve(Object.assign(Object.assign({}, responseData), { status: false, error_message: responseData.payUResponse.result.error_Message}));
                 }
-                removeSubscriptions();
+                removeListeners();
             });
             RNEvent.addListener('PAYMENT_FAILED', (responseData) => {
                 reject({status: false});
-                removeSubscriptions();
+                removeListeners();
             });
 
             RNPayU.start(JSON.stringify(payUData));
@@ -54,4 +49,9 @@ function getDefault(payUData) {
     payUData.udf10 = (payUData.udf10)? payUData.udf10 : "";
     payUData.isSandbox = (payUData.isSandbox) ? payUData.isSandbox: false;
     return payUData;
+}
+
+function removeListeners(){
+    RNEvent.removeAllListeners('PAYMENT_SUCCESS');
+    RNEvent.removeAllListeners('PAYMENT_FAILED');
 }
