@@ -7,25 +7,30 @@ const RNEvent = new NativeEventEmitter(RNPayU);
 export default class PayU{
     static startPayment(payUData){
         payUData = getDefault(payUData);
+
         return new Promise((resolve, reject) => {
+            RNPayU.start(JSON.stringify(payUData));
             RNEvent.addListener('PAYMENT_SUCCESS', (responseData) => {
                 if (typeof responseData !== 'object') {
                     responseData = JSON.parse(responseData);
                 }
 
                 if (responseData.payUResponse.result.status === "success"){
-                    resolve(Object.assign(Object.assign({}, responseData), { status: true }));
+                    responseData.status = true
+                    resolve(responseData);
                 }else{
-                    resolve(Object.assign(Object.assign({}, responseData), { status: false, error_message: responseData.payUResponse.result.error_Message}));
+                    responseData.status = false;
+                    responseData.error_message = responseData.payUResponse.result.error_Message;
+                    resolve(responseData);
                 }
                 removeListeners();
             });
+
             RNEvent.addListener('PAYMENT_FAILED', (responseData) => {
+                console.log("szxfcsdzfdsdfx", responseData);
                 reject({status: false});
                 removeListeners();
             });
-
-            RNPayU.start(JSON.stringify(payUData));
         });
     }
 
