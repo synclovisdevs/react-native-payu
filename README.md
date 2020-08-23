@@ -95,7 +95,7 @@ pod 'PayUmoney_PnP'
  }
  // You can also add udf1 to udf10 for additional info
 
- PayU(payUData).then((data) => {
+ PayU.startPayment(payUData).then((data) => {
      // Payment Success
      if (data.status){
          // Payment Success
@@ -113,10 +113,8 @@ pod 'PayUmoney_PnP'
  ### Validating Hash
  > Don't use in production just for testing purpose
  
- ```js
- import {HashSequence} from 'react-native-payu';
- 
- HashSequence({
+ ```js 
+ PayU.getHash({
      key: "Your Merchent Key",
      amount: "100",
      email: "abc@payu.in",
@@ -124,7 +122,7 @@ pod 'PayUmoney_PnP'
      productName: "product_name",
      firstName: "Your First Name",
      salt: "Salt"
- })
+ });
  
  // output: 43dfxcvdxd345tre534g545gb54e4g646h7nfgr35e060c3bfc0e489290e7c902750d5db3fc8be2f180daf4d534d7b9bef46fa0158a4c8a057b61
  ```
