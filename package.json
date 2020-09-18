@@ -5,6 +5,9 @@
   "summary": "This library is for react-native support for payU for both android and iOS",
   "homepage": "https://github.com/synclovisdevs/react-native-payu#readme",
   "main": "index.js",
+  "publishConfig": {
+    "registry": " https://npm.pkg.github.com/synclovisdevs/react-native-payu"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
