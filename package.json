@@ -6,7 +6,7 @@
   "homepage": "https://github.com/synclovisdevs/react-native-payu#readme",
   "main": "index.js",
   "publishConfig": {
-    "registry": " https://npm.pkg.github.com/synclovisdevs/react-native-payu"
+    "registry": " https://npm.pkg.github.com/synclovisdevs"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
